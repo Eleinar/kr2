@@ -56,17 +56,18 @@ class MainWindow(QMainWindow):
             self.table_widget.clear()
             employees = self.session.query(Employee).all()
             self.table_widget.setRowCount(len(employees))
-            self.table_widget.setColumnCount(5)
+            self.table_widget.setColumnCount(6)
             self.table_widget.setHorizontalHeaderLabels(
-                ["Имя", "Фамилия", "Должность", "Зарплата", "Дата приема"]
+                ["ID", "Имя", "Фамилия", "Должность", "Зарплата", "Дата приема"]
             )
             
             for row, employee in enumerate(employees):
-                self.table_widget.setItem(row, 0, QTableWidgetItem(employee.first_name or ""))
-                self.table_widget.setItem(row, 1, QTableWidgetItem(employee.last_name or ""))
-                self.table_widget.setItem(row, 2, QTableWidgetItem(employee.position or ""))
-                self.table_widget.setItem(row, 3, QTableWidgetItem(str(employee.salary or "")))
-                self.table_widget.setItem(row, 4, QTableWidgetItem(str(employee.hire_date or "")))
+                self.table_widget.setItem(row, 0, QTableWidgetItem(str(employee.id)))
+                self.table_widget.setItem(row, 1, QTableWidgetItem(employee.first_name or ""))
+                self.table_widget.setItem(row, 2, QTableWidgetItem(employee.last_name or ""))
+                self.table_widget.setItem(row, 3, QTableWidgetItem(employee.position or ""))
+                self.table_widget.setItem(row, 4, QTableWidgetItem(str(employee.salary or "")))
+                self.table_widget.setItem(row, 5, QTableWidgetItem(str(employee.hire_date or "")))
         except Exception as e:
             self.session.rollback()
             QMessageBox.critical(self, "Ошибка", f"Ошибка загрузки сотрудников: {str(e)}")
@@ -76,17 +77,17 @@ class MainWindow(QMainWindow):
             self.table_widget.clear()
             tasks = self.session.query(Task).all()
             self.table_widget.setRowCount(len(tasks))
-            self.table_widget.setColumnCount(5)
+            self.table_widget.setColumnCount(6)
             self.table_widget.setHorizontalHeaderLabels(
-                ["Название", "Описание", "Статус", "ID проекта", "ID сотрудника"]
+                ["ID", "Название", "Описание", "Статус", "ID проекта", "ID сотрудника"]
             )
             
             for row, task in enumerate(tasks):
-                self.table_widget.setItem(row, 0, QTableWidgetItem(task.task_name or ""))
-                self.table_widget.setItem(row, 1, QTableWidgetItem(task.description or ""))
-                self.table_widget.setItem(row, 2, QTableWidgetItem(task.status or ""))
-                self.table_widget.setItem(row, 3, QTableWidgetItem(str(task.project_id or "")))
-                self.table_widget.setItem(row, 4, QTableWidgetItem(str(task.assignee_id or "")))
+                self.table_widget.setItem(row, 1, QTableWidgetItem(task.task_name or ""))
+                self.table_widget.setItem(row, 2, QTableWidgetItem(task.description or ""))
+                self.table_widget.setItem(row, 3, QTableWidgetItem(task.status or ""))
+                self.table_widget.setItem(row, 4, QTableWidgetItem(str(task.project_id or "")))
+                self.table_widget.setItem(row, 5, QTableWidgetItem(str(task.assignee_id or "")))
         except Exception as e:
             self.session.rollback()
             QMessageBox.critical(self, "Ошибка", f"Ошибка загрузки задач: {str(e)}")
